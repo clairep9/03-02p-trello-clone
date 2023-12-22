@@ -36,6 +36,7 @@ Each card should hold the following data:
 
 ### Manage State
 - Utilize React's Context API to manage the state of boards, lists, and cards across the application.
+- Note: Context is not strictly required for this exercise.
 
 ### Styling
 - Apply CSS or a styling library of your choice to style the application, aiming to closely resemble Trello's design.
