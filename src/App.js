@@ -1,23 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
+import { List } from './List';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="app">
+      <header className="header">Header
+      {/* <FontAwesomeIcon icon="fa-solid fa-bell" /> */}
       </header>
+      <div className="top-row">Top Row</div>
+      <div className="main">
+        <div className="sidebar">Sidebar</div>
+        <div className="content">
+        <List />
+        </div>
+      </div>
     </div>
   );
 }
