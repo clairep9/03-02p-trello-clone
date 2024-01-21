@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { List } from './List';
+import { Done, InProgress, ToDo } from './List';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function App() {
@@ -13,7 +13,9 @@ function App() {
       <div className="main">
         <div className="sidebar">Sidebar</div>
         <div className="content">
-        <List />
+        <ToDo />
+        <InProgress />
+        <Done />
         </div>
       </div>
     </div>
