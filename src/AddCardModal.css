@@ -1,5 +1,5 @@
 
- .overlay {
+.overlay {
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -22,21 +22,7 @@
     min-width: 300px;
 }
 
-.close-button {
-    width: 60px;
-    height: 25px;
-    position: relative;
-    color: rgb(106, 101, 101);
-    font-weight: bold;
-    background-color: lightgrey;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid grey; 
-    border-radius: 5px; 
-    cursor: pointer;
-}
-
-  .delete-button {
+.close-modal {
     width: 60px;
     height: 25px;
     position: relative;
@@ -47,7 +33,6 @@
     justify-content: center;
     border: 1px solid grey; 
     border-radius: 5px; 
-    cursor: pointer;
   }
 
 .active-modal {

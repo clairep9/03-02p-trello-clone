@@ -1,98 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import data from './data/cards.json';
+import React, { useState } from 'react';
 import './List.css';
 import CardModal from './CardModal';
+import AddCardModal from './AddCardModal';
+import Card from './Card';
+import createCard from './CRUD/Create';
 
-const cards = [data.todoCards, data.inProgressCards, data.doneCards];
 
-function ToDo() {
-  const [modal, setModal] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+function List({ listIndex, title, cards, setCards}) {
+    const [modal, setModal] = useState(false);
+    const [selectedCard, setSelectedCard] = useState(null);
+  
+    const toggleModal = (card) => {
+      setModal(!modal);
+      setSelectedCard(card);
+    };
 
-  const toggleModal = (card) => {
-    setModal(!modal);
-    setSelectedCard(card);
-  };
+    const handleAdd = () => {
+        setModal(!modal)
+        setSelectedCard(null)
+    }
 
-//   useEffect(() => {
-//     if (modal) {
-//       document.body.classList.add('active-modal');
-//     } else {
-//       document.body.classList.remove('active-modal');
-//     }
-//   }, [modal]);
+    const handleCreate = (newCard) => {
+        createCard(listIndex, newCard, setCards)
+        setModal(false)
+    }
 
-  return (
+    
+  
+    return (
       <div className="list-container">
         <div className="list">
-          <h5>To Do</h5>
+          <h5>{title}</h5>
+          <h2 className='addButton' onClick={handleAdd}>+</h2>
         </div>
-        {cards[0].map((card) => (
-          <div key={card} className="card">
-            <h6 onClick={() => toggleModal(card)}>{card.title}</h6>
-          </div>
+        {cards.map((card, index) => (
+          <Card key={index} card={card} onCardClick={toggleModal} className='card' />
         ))}
-      
-      {modal && selectedCard && (
-        <CardModal modal={modal} toggleModal={toggleModal} card={selectedCard}/>
-      )}
-    </div>
-  );
-}
 
-function InProgress() {
-  const [modal, setModal] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+        {modal && !selectedCard && (
+            <AddCardModal onClose={() => setModal(false)} onCreateCard={handleCreate} />
+        )}
 
-  const toggleModal = (card) => {
-    setModal(!modal);
-    setSelectedCard(card);
-  };
 
-  return (
-    <div className="list-container1">
-      <div className="list">
-        <h5>In Progress</h5>
+        {modal && selectedCard && (
+          <CardModal 
+          modal={modal} 
+          toggleModal={toggleModal} 
+          card={selectedCard} setCards={setCards} 
+          listIndex={listIndex} 
+          cards={cards}
+          />
+        )}
       </div>
-      {cards[1].map((card) => (
-        <div key={card} className="card">
-          <h6 onClick={() => toggleModal(card)}>{card.title}</h6>
-        </div>
-      ))}
-      {modal && selectedCard && (
-        <CardModal modal={modal} toggleModal={toggleModal} card={selectedCard}/>
-      )}
-    </div>
-  );
-}
+    );
+  }
 
-function Done() {
-  const [modal, setModal] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
+  export {List}
 
-  const toggleModal = (card) => {
-    setModal(!modal);
-    setSelectedCard(card);
-  };
-
-  return (
-    <div className="list-container2">
-      <div className="list">
-        <h5>Done</h5>
-      </div>
-      {cards[2].map((card) => (
-        <div key={card} className="card">
-          <h6 onClick={() => toggleModal(card)}>{card.title}</h6>
-        </div>
-      ))}
-      {modal && selectedCard && (
-        <CardModal modal={modal} toggleModal={toggleModal} card={selectedCard}/>
-      )}
-      <button id="addButton">
-        <div>{<h5>+ Add Another List</h5>}</div>
-      </button>
-    </div>
-  );
-}
-
-export { ToDo, InProgress, Done };
