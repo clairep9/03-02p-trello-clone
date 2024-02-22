@@ -1,6 +1,9 @@
 import React, {useEffect} from "react";
 import "./CardModal.css"
 import deleteCard from "./CRUD/Delete";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function CardModal({ modal, toggleModal, card, setCards, listIndex, cards}) {
   useEffect(() => {
@@ -18,10 +21,10 @@ function CardModal({ modal, toggleModal, card, setCards, listIndex, cards}) {
 
   const handleDeleteClick = () => {
     const cardIndex = cards.findIndex((c) => c.title === card.title);
-    if (cardIndex !== -1) {
     deleteCard(listIndex, cardIndex, setCards);
-    }
     toggleModal();
+    toast.success('Card deleted successfully!')
+    
   };
  
 

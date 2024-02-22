@@ -384,17 +384,22 @@ button {
 }
 
 .premium-box {
-  background-color: #8a2be2; 
+  background: linear-gradient(to right, #7a5b9d,#8a2be2, #f49ac2);
   color: #fff; 
   font-size: 14px;
   font-weight: 600;
   padding: 8px;
   text-align: center;
-  margin-top: 290px;
+  margin-top: 12px;
   border-radius: 3px;
 }
 
 .arrow-down3 {
   margin-left: 56px; 
   font-size: 20px;
+}
+
+.divider2 {
+  border-top: 1px solid rgba(204, 196, 196,0.5); 
+  margin-top: 277px; 
 }

@@ -4,11 +4,14 @@ import CardModal from './CardModal';
 import AddCardModal from './AddCardModal';
 import Card from './Card';
 import createCard from './CRUD/Create';
+import {useDroppable} from '@dnd-kit/core';
 
 
-function List({ listIndex, title, cards, setCards}) {
+
+function List({ listIndex, title, cards, setCards, children}) {
     const [modal, setModal] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
+  
   
     const toggleModal = (card) => {
       setModal(!modal);
@@ -25,17 +28,47 @@ function List({ listIndex, title, cards, setCards}) {
         setModal(false)
     }
 
+
+    const handleEditCard = (editedCard, index) => {
+      setCards((prevCards) => {
+        const updatedCards = [...prevCards];
+        updatedCards[listIndex][index] = editedCard;
+        return updatedCards;
+      });
+    };
     
+
+    const {isOver, setNodeRef} = useDroppable({
+      id: listIndex,
+    });
+    const style = {
+      color: isOver ? 'green' : undefined,
+    };
+
+   
+   
   
+    
     return (
-      <div className="list-container">
+      <div className="list-container" ref={setNodeRef} style={style}>
+        {children}
         <div className="list">
           <h5>{title}</h5>
           <h2 className='addButton' onClick={handleAdd}>+</h2>
         </div>
+    
         {cards.map((card, index) => (
-          <Card key={index} card={card} onCardClick={toggleModal} className='card' />
+         
+          <Card 
+          key={index}
+          card={card} 
+          onCardClick={toggleModal}
+          onEditCard={(editedCard) => handleEditCard(editedCard, index)}
+
+
+     />
         ))}
+    
 
         {modal && !selectedCard && (
             <AddCardModal onClose={() => setModal(false)} onCreateCard={handleCreate} />
@@ -52,6 +85,7 @@ function List({ listIndex, title, cards, setCards}) {
           />
         )}
       </div>
+  
     );
   }
 

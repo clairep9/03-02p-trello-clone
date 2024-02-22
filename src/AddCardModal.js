@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { toast } from 'react-toastify';
-import './AddCardModal.css'
+import './AddCardModal.css';
+
 
 
 function AddCardModal({ onClose, onCreateCard }) {
@@ -33,6 +34,7 @@ function AddCardModal({ onClose, onCreateCard }) {
         labels: '',
       });
       onClose();
+      toast.success('Card created successfully!')
     };
 
 

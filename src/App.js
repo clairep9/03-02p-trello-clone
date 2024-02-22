@@ -3,22 +3,44 @@ import './App.css';
 import { List } from './List';
 import data from './data/cards.json';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { FaTrello } from 'react-icons/fa';
-import { FiGrid, FiSearch, FiChevronDown, FiBell, FiInfo, FiSettings, FiTable, FiCalendar, FiSquare, FiPlus } from 'react-icons/fi'
+import { FiGrid, FiSearch, FiChevronDown, FiBell, FiInfo, FiSettings, FiTable, FiCalendar, FiSquare, FiPlus } from 'react-icons/fi';
+import {
+  DndContext
+} from '@dnd-kit/core';
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRocket, faBolt, faStar, faUser } from '@fortawesome/free-solid-svg-icons';
 
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const initialCardsData = [data.todoCards, data.inProgressCards, data.doneCards];
 
 function App() {
   const [cards, setCards] = useState(initialCardsData)
 
+function findCardIndex(title) {
+for (let col of cards) {
+  for (let card of col) {
+    if (title === card.title) {
+      return{ 'cardIndex':col.indexOf(card), 'colIndex': cards.indexOf(col)}
+    }
+
+  }
+  
+}
+}
+
+  function handleDragEnd(event) {
+   
+    const {colIndex, cardIndex} = findCardIndex(event.active.id)
+    const dragged = cards[colIndex].splice(cardIndex, 1)
+    cards[event.over.id].push(dragged[0])
+    
+  }
+
   return (
+    <DndContext onDragEnd={handleDragEnd}>
     < div>
       <ToastContainer />
       <header className="header">
@@ -77,6 +99,7 @@ function App() {
           <div className='sidebar-box1' style={{ fontSize: '15px', fontWeight: '700' }}>Your Boards <FiPlus className="plus-icon1" /></div>
             <div className='sidebar-box'><FiSquare className="sidebar-icon" />My Trello Board</div>
         </div>
+        <div className='divider2'></div>
         <div className='premium-box'>
           <span>Try Premium free</span>
         </div>
@@ -93,6 +116,7 @@ function App() {
 
       </div>
     </ div>
+    </DndContext>
   );
 }
 
